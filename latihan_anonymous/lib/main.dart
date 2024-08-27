@@ -14,11 +14,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String message = 'ini adalah teks';
 
-  void tombolDitekan() {
-    setState(() { // function setState digunakan untuk merefresh halaman
-      message = 'tombo sudah ditekan';
-    });
-  }
+  // void tombolDitekan() {
+  //   setState(() { // function setState digunakan untuk merefresh halaman
+  //     message = 'tombo sudah ditekan';
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,12 @@ class _MyAppState extends State<MyApp> {
                     message,
                   ),
                   ElevatedButton(
-                    onPressed: tombolDitekan,
+                    onPressed: () {
+                      // (){} merupakan anonymous method
+                      setState(() {
+                        message = "tombol telah ditekan";
+                      });
+                    },
                     child: Text('tekan saya'),
                   ),
                 ],
