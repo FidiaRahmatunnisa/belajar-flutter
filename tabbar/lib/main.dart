@@ -1,37 +1,58 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  TabBar myTabBar = TabBar(
+    indicatorSize: TabBarIndicatorSize.tab, // penting karena mencangkup seluruh box tab
+    indicator: BoxDecoration(
+      color: Colors.red,
+      border: Border(
+        bottom: BorderSide(
+          color: Colors.white,
+          width: 3
+        )
+      )
+    ),
+    // indicatorColor: Colors.red, 
+    tabs: [
+    Tab(
+      icon: Icon(Icons.comment),
+      text: 'Comments',
+    ),
+    Tab(
+      icon: Icon(Icons.computer),
+      text: 'Computer',
+    ),
+  ]);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 4,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Contoh Tab Bar'),
-            bottom: TabBar(tabs: [
-            Tab(icon: Icon(Icons.comment), text: 'Comments',),
-            Tab(child: Image(image: AssetImage('assets/gojo.jpg')),),
-            Tab(icon: Icon(Icons.computer),),
-            Tab(text: 'News',),
-          ],
-         ),
-        ),
-        body: TabBarView(
-          children: [
-            Center(child: Text('Tab 1'),),
-            Center(child: Text('Tab 2'),),
-            Center(child: Text('Tab 3'),),
-            Center(child: Text('Tab 4'),),
-          ]
-          ),
+            title: Text('Contoh Tab Bar'), 
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(myTabBar.preferredSize.height),
+              child: Container(
+                child: myTabBar,
+                color: Colors.amber,
+                ),
+              ),
+            ),
+          body: TabBarView(children: [
+            Center(
+              child: Text('Tab 1'),
+            ),
+            Center(
+              child: Text('Tab 2'),
+            ),
+          ]),
         ),
       ),
     );
