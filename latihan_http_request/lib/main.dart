@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:latihan_http_request/userList_modal.dart';
 // import 'package:latihan_http_request/push_http_model.dart';
-import 'package:latihan_http_request/users_model.dart';
+// import 'package:latihan_http_request/users_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // PostResult1? postResult;
-  User? user;
+  // User? user;
+  String output = 'No Data';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -48,18 +51,34 @@ class _MyAppState extends State<MyApp> {
               //     },
               //     child: Text('PUSH')),
 
-              Text((user !=  null) ? 
-                  user!.id! + " | " + user!.name! + " | "
-                  : "Tidak ada"
-              ),
+              // Text((user !=  null) ?
+              //     user!.id! + " | " + user!.name! + " | "
+              //     : "Tidak ada"
+              // ),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       User.connectToAPI('2').then((value) {
+              //         user = value;
+              //         setState(() {});
+              //       });
+              //     },
+              //     child: Text('GET'))
+
+              Text(output),
               ElevatedButton(
-                  onPressed: () {
-                    User.connectToAPI('2').then((value) {
-                      user = value;
-                      setState(() {});
-                    });
-                  },
-                  child: Text('GET'))
+                onPressed: () {
+                  UserList.getUserList("2").then((users) {
+                    output = "";
+                    for (int i = 0; i < users.length; i++) {
+                      output = output + "[ " + users[i].name! + " ]";
+                      setState(() {
+                        // output;
+                      });
+                    }
+                  });
+                },
+                child: Text('GET'),
+              ),
             ],
           ),
         ),
