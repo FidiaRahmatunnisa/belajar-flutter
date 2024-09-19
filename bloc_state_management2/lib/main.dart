@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:bloc_state_management2/color_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Inisialisasi HydratedStorage
+  final storage = await HydratedStorage.build(
+    storageDirectory: await getApplicationDocumentsDirectory(),
+  );
+
+  HydratedBloc.storage = storage;
+
   runApp(const MyApp());
 }
 
@@ -14,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: BlocProvider<ColorBloc>(
-        create: (context) => ColorBloc(Colors.amber),
+        create: (context) => ColorBloc(), // Tidak perlu parameter di sini
         child: HomePage(),
       ),
     );
@@ -37,9 +48,7 @@ class HomePage extends StatelessWidget {
             },
             backgroundColor: Colors.amber,
           ),
-          SizedBox(
-            width: 10,
-          ),
+          const SizedBox(width: 10),
           FloatingActionButton(
             onPressed: () {
               bloc.add(ColorEvent.to_lightblue);
@@ -49,15 +58,15 @@ class HomePage extends StatelessWidget {
         ],
       ),
       appBar: AppBar(
-        title: Text('BLoC with Library'),
+        title: const Text('BLoC with Library'),
       ),
       body: Center(
         child: BlocBuilder<ColorBloc, Color>(
-          builder: (context, currenColor) => AnimatedContainer(
-            duration: Duration(seconds: 5),
+          builder: (context, currentColor) => AnimatedContainer(
+            duration: const Duration(seconds: 5),
             width: 100,
             height: 100,
-            color: currenColor,
+            color: currentColor,
           ),
         ),
       ),
